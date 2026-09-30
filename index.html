@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech.Care — Patient Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <p>Loading patient data…</p>
+</div>
+<div id="err" role="alert"></div>
+
+<div class="shell">
+
+  <!-- ===== TOP NAV ===== -->
+  <header class="topnav">
+   <a href="#" class="logo">
+  <img src="TestLogo.svg" alt="Tech.Care" height="36" />
+</a>
+
+    <nav class="topnav-links" aria-label="Main navigation">
+      <a class="topnav-link" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Overview
+      </a>
+      <a class="topnav-link active" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Patients
+      </a>
+      <a class="topnav-link" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Schedule
+      </a>
+      <a class="topnav-link" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Message
+      </a>
+      <a class="topnav-link" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Transactions
+      </a>
+    </nav>
+
+    <div class="topnav-right">
+      <div class="topnav-doctor">
+        <img class="doctor-avatar" src="https://i.pravatar.cc/84?img=13"
+          alt="Dr. José Simmons" width="42" height="42" loading="lazy"/>
+        <div class="doctor-info">
+          <div class="doctor-name">Dr. José Simmons</div>
+          <div class="doctor-role">General Practitioner</div>
+        </div>
+      </div>
+      <div class="topnav-divider" aria-hidden="true"></div>
+      <button class="icon-btn" aria-label="Settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="More options">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" aria-label="Patient list">
+    <div class="sidebar-head">
+      <h2>Patients</h2>
+      <button class="sidebar-search" aria-label="Search patients">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+    </div>
+    <ul id="patient-list" class="patient-list" aria-label="Patient list"></ul>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main">
+
+    <!-- ROW 1 : Diagnosis History (left) | Patient Profile (right) -->
+    <div class="top-grid">
+
+      <section class="diag-history" aria-label="Diagnosis history">
+        <div class="diag-history-head">
+          <h2>Diagnosis History</h2>
+        </div>
+
+        <!-- Blood Pressure -->
+        <div class="bp-card">
+          <div class="bp-card-head">
+            <strong>Blood Pressure</strong>
+            <select id="bp-range" class="bp-month-select" aria-label="Time range">
+              <option value="6" selected>Last 6 months</option>
+              <option value="12">Last 12 months</option>
+              <option value="all">All Time</option>
+            </select>
+          </div>
+          <div class="bp-chart-row">
+            <div class="bp-chart-wrap">
+              <canvas id="bpChart" aria-label="Blood pressure chart"></canvas>
+            </div>
+            <div class="bp-legends">
+              <div class="bp-legend-item">
+                <div>
+                  <span class="bp-legend-dot" style="background:#E040A2"></span>
+                  <span class="bp-legend-label">Systolic</span>
+                </div>
+                <div class="bp-legend-val" id="stat-syst">—</div>
+                <div class="bp-legend-trend" id="stat-syst-trend"></div>
+              </div>
+              <div class="bp-legend-divider"></div>
+              <div class="bp-legend-item">
+                <div>
+                  <span class="bp-legend-dot" style="background:#6C63FF"></span>
+                  <span class="bp-legend-label">Diastolic</span>
+                </div>
+                <div class="bp-legend-val" id="stat-diast">—</div>
+                <div class="bp-legend-trend" id="stat-diast-trend"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vitals -->
+        <div class="vitals-row">
+          <div class="vital-card respiratory">
+            <div class="vital-icon-wrap" id="icon-resp"></div>
+            <div class="vital-label">Respiratory Rate</div>
+            <div class="vital-value" id="v-resp-val">— bpm</div>
+            <div class="vital-status" id="v-resp-status"></div>
+          </div>
+          <div class="vital-card temperature">
+            <div class="vital-icon-wrap" id="icon-temp"></div>
+            <div class="vital-label">Temperature</div>
+            <div class="vital-value" id="v-temp-val">—°F</div>
+            <div class="vital-status" id="v-temp-status"></div>
+          </div>
+          <div class="vital-card heartrate">
+            <div class="vital-icon-wrap" id="icon-heart"></div>
+            <div class="vital-label">Heart Rate</div>
+            <div class="vital-value" id="v-heart-val">— bpm</div>
+            <div class="vital-status" id="v-heart-status"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Patient Profile — right column, row 1 ONLY (no lab results here) -->
+      <div class="profile-card" aria-label="Patient profile">
+        <div class="profile-top">
+          <img id="profile-photo" class="profile-avatar"
+            src="https://i.pravatar.cc/220?img=47"
+            alt="Jessica Taylor" width="110" height="110" loading="lazy"/>
+          <div class="profile-name" id="profile-name">Jessica Taylor</div>
+        </div>
+        <ul id="profile-info" class="profile-info" aria-label="Patient information"></ul>
+        <button class="btn-show-all">Show All Information</button>
+      </div>
+
+    </div><!-- /top-grid -->
+
+    <!-- ROW 2 : Diagnostic List (left) | Lab Results (right) -->
+    <div class="bottom-grid">
+
+      <section class="diagnostic-card" aria-label="Diagnostic list">
+        <div class="diagnostic-card-head">
+          <h2>Diagnostic List</h2>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="diagnostic-table" aria-label="Diagnoses">
+            <thead>
+              <tr>
+                <th style="width:200px">Problem/Diagnosis</th>
+                <th>Description</th>
+                <th style="width:160px">Status</th>
+              </tr>
+            </thead>
+            <tbody id="diag-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Lab Results — beside Diagnostic List -->
+      <div class="lab-card" aria-label="Lab results">
+        <div class="lab-card-head">
+          <h3>Lab Results</h3>
+        </div>
+        <ul id="lab-list" class="lab-list" aria-label="Lab results list"></ul>
+      </div>
+
+    </div><!-- /bottom-grid -->
+
+  </main>
+
+</div><!-- /shell -->
+
+<script src="app.js"></script>
+</body>
+</html>
